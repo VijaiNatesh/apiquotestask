@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<style>
+    #quotestable {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 75%;
+    }
+
+    #quotestable td,
+    #quotestable th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        font-size: 10px
+    }
+
+    #quotestable tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #quotestable tr:hover {
+        background-color: #ddd;
+    }
+
+    #quotestable th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+    }
+
+  
+</style>
+
+<body>
+    <table id="quotestable">
+        <thead>
+            <th>Id</th>
+            <th>Author</th>
+            <th>En</th>
+        </thead>
+        <tbody id="quotes"></tbody>
+    </table> 
+
+    <script> 
+        async function getQuotes() {
+            try {
+                await fetch("https://programming-quotes-api.herokuapp.com/quotes")
+                    .then(res => res.json())
+                    .then(data => initialize(data))
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+        getQuotes()
+        function initialize(data) {
+            console.log(data)
+            var temp = "";
+            data.forEach((item) => {
+
+                temp += "<tr>"
+                temp += "<td>" + item.id + "</td>"
+                temp += "<td>" + item.author + "</td>"
+                temp += "<td>" + item.en + "</td>"
+
+                temp += "</tr>"
+            })
+            document.getElementById("quotes").innerHTML = temp;
+        }
+    </script>
+</body>
+
+</html>
